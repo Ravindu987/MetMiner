@@ -163,6 +163,7 @@ app.post("/metaphors-by-poet", async (req, res) => {
 
 // Search all metaphors by a key word
 app.post("/search-all-metaphors", async (req, res) => {
+    console.log("here")
     const {word} = req.body;
     const result = await client.search({
         index: "sinhala-metaphor-corpus",
@@ -230,6 +231,8 @@ app.post("/search-all-metaphors-poet", async (req, res) => {
     res.json(result);
 });
 
+
+// ==================ADDITIONAL==================
 
 // Get all lines in a time period
 app.post("/search-time-period", async (req, res) => {

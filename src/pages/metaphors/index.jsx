@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { MetaphorTable } from "../../components/metaphorTable";
 import {SearchField} from "../../components/searchField";
+import { HeaderBar } from "../../components/headerBar";
+
 
 export function MetaphorPage() {
 
@@ -21,9 +22,9 @@ export function MetaphorPage() {
     
     return (
         <div>
-        <h1>Metaphor List</h1>
-        <SearchField setData={setMetaphors}/>
-        <MetaphorTable data={metaphors} />
+            <HeaderBar text="Metaphors" />
+            <SearchField setData={setMetaphors}/>
+            <MetaphorTable data={metaphors} />
         </div>
     );
 }

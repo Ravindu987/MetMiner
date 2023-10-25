@@ -1,6 +1,6 @@
 const fs = require("fs");
 let scvData = []
-fs.readFile("server/Data/data.csv", "utf-8", (err, data) => {
+fs.readFile("data.csv", "utf-8", (err, data) => {
     if (err) throw err;
     // console.log(data);
     scvData = data.split("\n");
@@ -9,7 +9,7 @@ fs.readFile("server/Data/data.csv", "utf-8", (err, data) => {
     }
     let headers = scvData.shift();
     let jsonData = []
-    json_index = {"index": {"_index": "sinhala-metaphors"}}
+    json_index = {"index": {"_index": "sinhala-metaphor-corpus"}}
     for (let i = 0; i < scvData.length; i++) {
         jsonData.push(json_index);
         let temp = {};
@@ -20,7 +20,7 @@ fs.readFile("server/Data/data.csv", "utf-8", (err, data) => {
     }
     function appendData() {
         if (jsonData.length) {
-            fs.appendFile("server/Data/data.json", JSON.stringify(jsonData.shift())+"\n", (err) => {
+            fs.appendFile("data.json", JSON.stringify(jsonData.shift())+"\n", (err) => {
                 if (err) throw err;
                 appendData();
             });

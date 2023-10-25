@@ -26,6 +26,13 @@ const columns = [
     format: (value) => value.toLocaleString('en-US'),
   },
   {
+    id: 'metaphor_present',
+    label: 'Metaphor Present',
+    align:'left',
+    minWidth: 75,
+    format: (value) => value.toFixed(2),
+  },
+  {
     id: 'metaphorical_terms',
     label: 'Metaphorical Terms',
     align:'left',
@@ -55,19 +62,19 @@ const columns = [
   }
 ];
 
-function createData(id, poem_name, poet, year, line, metaphorical_terms, target_domain, source_domain, interpretation) {
-  return { id, poem_name, poet, year, line, metaphorical_terms, target_domain, source_domain, interpretation};
+function createData(id, poem_name, poet, year, line, metaphor_present, metaphorical_terms, target_domain, source_domain, interpretation) {
+  return { id, poem_name, poet, year, line, metaphor_present, metaphorical_terms, target_domain, source_domain, interpretation};
 }
 
 function createRows(data){
     const rows = []
     data.forEach(element => {
-        rows.push(createData(element._id, element._source['Poem_Name'], element._source['Poet'], element._source['Year'], element._source['Line'], element._source['Metaphorical_Terms'], element._source['Target_Domain'], element._source['Source_Domain'], element._source['Interpretation']))
+        rows.push(createData(element._id, element._source['Poem_Name'], element._source['Poet'], element._source['Year'], element._source['Line'], element._source['Metaphor_present_or_not'], element._source['Metaphorical_Terms'], element._source['Target_Domain'], element._source['Source_Domain'], element._source['Interpretation']))
     });
     return rows
 }
 
-export function MetaphorTable({data}) {
+export function AllTable({data}) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [rows, setRows] = React.useState([])

@@ -1,4 +1,3 @@
-// src/InputButton.js
 import React, { useState } from 'react';
 import { Button, TextField, Select, MenuItem } from '@mui/material';
 import axios from 'axios';
@@ -32,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export function SearchField({setData}){
+export function SearchFieldAll({setData}){
   const [inputValue, setInputValue] = useState('');
   const [inputSelect, setInputSelect] = useState('Any');
   const classes = useStyles();
@@ -48,16 +47,16 @@ export function SearchField({setData}){
   const handleButtonClick = () => {
 
     if (inputSelect === 'Any' && inputValue === '') {
-      axios.get('http://localhost:3001/all-metaphors')
-      .then((res) => {
-        setData(res.data.hits.hits);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+        axios.get('http://localhost:3001/all-lines')
+        .then((res) => {
+            setData(res.data.hits.hits);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
     }
     else if (inputSelect === 'Any') {
-      axios.post('http://localhost:3001/search-all-metaphors', {
+      axios.post('http://localhost:3001/search-all', {
         word: inputValue,
       })
       .then((res) => {
@@ -68,29 +67,29 @@ export function SearchField({setData}){
       })
     }
     else if (inputValue === '') {
-      axios.post('http://localhost:3001/metaphors-by-poet', {
+        axios.post('http://localhost:3001/all-by-poet', {
         poet: inputSelect,
-      })
-      .then((res) => {
-        setData(res.data.hits.hits);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+        })
+        .then((res) => {
+            setData(res.data.hits.hits);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
     }
     else{
-      axios.post('http://localhost:3001/search-all-metaphors-poet', {
+        axios.post('http://localhost:3001/search-all-poet', {
         word: inputValue,
         poet: inputSelect,
-      })
-      .then((res) => {
-        setData(res.data.hits.hits);
-      }
-      )
-      .catch((err) => {
-        console.log(err);
-      }
-      )
+        })
+        .then((res) => {
+            setData(res.data.hits.hits);
+        }
+        )
+        .catch((err) => {
+            console.log(err);
+        }
+        )
     }
 };
 
