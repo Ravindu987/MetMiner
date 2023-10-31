@@ -31,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export function SearchFieldAll({setData}){
+export function SearchFieldAll(props){
+  const {setData, setPage} = props;
   const [inputValue, setInputValue] = useState('');
   const [inputSelect, setInputSelect] = useState('Any');
   const classes = useStyles();
@@ -91,6 +92,8 @@ export function SearchFieldAll({setData}){
         }
         )
     }
+
+    setPage(0);
 };
 
   return (

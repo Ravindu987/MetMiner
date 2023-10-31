@@ -74,8 +74,8 @@ function createRows(data){
     return rows
 }
 
-export function AllTable({data}) {
-    const [page, setPage] = React.useState(0);
+export function AllTable(props) {
+    const {data, page,  setPage} = props;
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [rows, setRows] = React.useState([])
     const handleChangePage = (event, newPage) => {

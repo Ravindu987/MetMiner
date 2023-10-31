@@ -8,6 +8,7 @@ import { HeaderBar } from "../../components/headerBar";
 export function AllPage() {
 
     const [all, setAll] = useState([]);
+    const [page, setPage] = useState(0);
 
     useEffect(() => {
         axios.get("http://localhost:3001/all-lines")
@@ -23,8 +24,8 @@ export function AllPage() {
     return (
         <div>
             <HeaderBar text="All" />
-            <SearchFieldAll setData={setAll}/>
-            <AllTable data={all} />
+            <SearchFieldAll setData={setAll} setPage={setPage}/>
+            <AllTable data={all} page={page} setPage={setPage}/>
         </div>
     );
 }
