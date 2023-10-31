@@ -1,8 +1,11 @@
 // src/InputButton.js
 import React, { useState } from 'react';
 import { Button, TextField, Select, MenuItem } from '@mui/material';
-import axios from 'axios';
 import { makeStyles } from '@mui/styles';
+import GetAllMetaphors from '../api/services/getAllMetaphors';
+import SearchAllMetaphors from '../api/services/searchAllMetaphors';
+import SearchMetaphorsByPoet from '../api/services/searchMetaphorsByPoet';
+import SearchAllMetaphorsPoet from '../api/services/searchAllMetaphorsPoet';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -45,52 +48,42 @@ export function SearchField({setData}){
     setInputSelect(event.target.value);
   };
 
-  const handleButtonClick = () => {
+  const handleButtonClick = async () => {
 
     if (inputSelect === 'Any' && inputValue === '') {
-      axios.get('http://localhost:3001/all-metaphors')
-      .then((res) => {
+      try {
+        const res = await GetAllMetaphors();
         setData(res.data.hits.hits);
-      })
-      .catch((err) => {
+      } catch (err) {
         console.log(err);
-      })
+      }
     }
     else if (inputSelect === 'Any') {
-      axios.post('http://localhost:3001/search-all-metaphors', {
-        word: inputValue,
-      })
-      .then((res) => {
+      try {
+        const res = SearchAllMetaphors(inputValue);
         setData(res.data.hits.hits);
-      })
-      .catch((err) => {
+        
+      } catch (err) {
         console.log(err);
-      })
+      }
+
     }
     else if (inputValue === '') {
-      axios.post('http://localhost:3001/metaphors-by-poet', {
-        poet: inputSelect,
-      })
-      .then((res) => {
+      try {
+        const res = await SearchMetaphorsByPoet(inputSelect);
         setData(res.data.hits.hits);
-      })
-      .catch((err) => {
+      } catch (err) {
         console.log(err);
-      })
+        
+      }
     }
     else{
-      axios.post('http://localhost:3001/search-all-metaphors-poet', {
-        word: inputValue,
-        poet: inputSelect,
-      })
-      .then((res) => {
+      try {
+        const res = await SearchAllMetaphorsPoet(inputValue, inputSelect);
         setData(res.data.hits.hits);
+      } catch (err) {
+          console.log(err);
       }
-      )
-      .catch((err) => {
-        console.log(err);
-      }
-      )
     }
 };
 
