@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { Button, TextField, Select, MenuItem } from '@mui/material';
 import axios from 'axios';
 import { makeStyles } from '@mui/styles';
+import GetAllLines from '../api/services/getAllLines';
+import SearchAllLines from '../api/services/searchAll';
+import SearchAllPoet from '../api/services/searchAllPoet';
+import SearchAllByPoet from '../api/services/searchAllByPoet';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -45,54 +49,42 @@ export function SearchFieldAll(props){
     setInputSelect(event.target.value);
   };
 
-  const handleButtonClick = () => {
+  const handleButtonClick = async () => {
 
     if (inputSelect === 'Any' && inputValue === '') {
-        axios.get('http://localhost:3001/all-lines')
-        .then((res) => {
-            setData(res.data.hits.hits);
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+        try {
+          const res = await GetAllLines();
+          setData(res.data.hits.hits);
+        } catch (err) {
+          console.log(err);
+        }
     }
     else if (inputSelect === 'Any') {
-      axios.post('http://localhost:3001/search-all', {
-        word: inputValue,
-      })
-      .then((res) => {
-        setData(res.data.hits.hits);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+      try {
+          const res = await SearchAllLines(inputValue);
+          setData(res.data.hit.hits);
+      } catch (err) {
+          console.log(err);
+      }
     }
     else if (inputValue === '') {
-        axios.post('http://localhost:3001/all-by-poet', {
-        poet: inputSelect,
-        })
-        .then((res) => {
-            setData(res.data.hits.hits);
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+        try {
+          const res = await SearchAllPoet(inputSelect);
+          setData(res.data.hit.hits);
+        } catch (err) {
+          console.log(err);
+        }
     }
     else{
-        axios.post('http://localhost:3001/search-all-poet', {
-        word: inputValue,
-        poet: inputSelect,
-        })
-        .then((res) => {
-            setData(res.data.hits.hits);
-        }
-        )
-        .catch((err) => {
-            console.log(err);
-        }
-        )
+      try{
+        const res = await SearchAllByPoet(inputValue, inputSelect);
+        setData(res.data.hit.hits);
+      } catch (err){
+        console.log(err);
+      }
     }
 
+    // Set table page to 0
     setPage(0);
 };
 
