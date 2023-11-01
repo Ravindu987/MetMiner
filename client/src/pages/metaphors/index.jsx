@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { MetaphorTable } from "../../components/metaphorTable";
 import { SearchField } from "../../components/searchField";
 import { HeaderBar } from "../../components/headerBar";

@@ -1,7 +1,6 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import { makeStyles } from "@mui/styles";
 
 export function HeaderBar({ text }) {
   return (
